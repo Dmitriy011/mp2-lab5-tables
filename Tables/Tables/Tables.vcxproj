@@ -143,12 +143,12 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\AVL_tree.h" />
+    <ClInclude Include="..\include\Hash_table.h" />
     <ClInclude Include="..\include\List.h" />
     <ClInclude Include="..\include\Monom.h" />
-    <ClInclude Include="AVL_tree.h" />
-    <ClInclude Include="Hash_table.h" />
-    <ClInclude Include="Polinom.h" />
-    <ClInclude Include="unordered_massive.h" />
+    <ClInclude Include="..\include\Polinom.h" />
+    <ClInclude Include="..\include\unordered_massive.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

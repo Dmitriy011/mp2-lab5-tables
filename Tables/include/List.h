@@ -4,17 +4,17 @@
 
 using namespace std;
 
-template <class T>
+template <class ValType>
 struct Node
 {
-	T value;
-	Node<T>* next;
-	Node<T>* prev;
+	ValType value;
+	Node<ValType>* next;
+	Node<ValType>* prev;
 
 	Node() : next(nullptr), prev(nullptr) {}
 };
 
-template <class T>
+template <class ValType>
 class List
 {
 public:
@@ -25,12 +25,12 @@ public:
 		return size;
 	}
 
-	Node<T>* getHead() const
+	Node<ValType>* getHead() const
 	{
 		return head;
 	}
 
-	Node<T>* getTail() const
+	Node<ValType>* getTail() const
 	{
 		return tail;
 	}
@@ -40,9 +40,9 @@ public:
 		size = _s;
 	}
 
-	void add(T _val)
+	void add(ValType _val)
 	{
-		Node <T>* tmp_n1 = new Node<T>;
+		Node <ValType>* tmp_n1 = new Node<ValType>;
 		tmp_n1->value = _val;
 
 		if (size == 0)
@@ -51,8 +51,8 @@ public:
 		}
 		else
 		{
-			Node<T>* current = nullptr;
-			Node<T>* tmp_n2 = head;
+			Node<ValType>* current = nullptr;
+			Node<ValType>* tmp_n2 = head;
 
 			if (_val > head->value)
 			{
@@ -99,7 +99,7 @@ public:
 
 	void printList() const
 	{
-		Node<T>* tmp = tail;
+		Node<ValType>* tmp = tail;
 
 		while (tmp != nullptr)
 		{
@@ -109,7 +109,7 @@ public:
 		cout << endl;
 	}
 
-	void merge(Node<T>* _p1, Node<T>* _p2)
+	void merge(Node<ValType>* _p1, Node<ValType>* _p2)
 	{
 		_p1->value = _p1->value + _p2->value;
 		_p1->next = _p2->next;
@@ -128,7 +128,7 @@ public:
 	}
 
 private:
-	Node<T>* head;
-	Node<T>* tail;
+	Node<ValType>* head;
+	Node<ValType>* tail;
 	size_t size;
 };

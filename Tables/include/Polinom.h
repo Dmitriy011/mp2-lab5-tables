@@ -1,6 +1,11 @@
 #pragma once
 
+#include <vector>
+#include <iostream>
+
 #include "Monom.h"
+
+using namespace std;
 
 template <class T>
 class Polinom
@@ -45,17 +50,14 @@ public:
 		T _cf;
 		Monom<T> m;
 
-		cout << endl << "Set numbers of monoms: " << endl;
+		cout << endl << "Set numbers of monoms: ";
 		cin >> count_monoms;
-		cout << "count of monoms: " << count_monoms << endl;
 		for (int i = 0; i < count_monoms; i++)
 		{
 			cout << "Set coefficient of the monom: ";
 			cin >> _cf;
-			cout << "coefficient: " << _cf << endl;
-			cout << "Set index of monom: " << endl;
+			cout << "Set index of monom: ";
 			cin >> _index;
-			cout << "index: " << _index << endl;
 
 			while ((_index > 999) || (_index < 0))
 			{
@@ -66,6 +68,21 @@ public:
 			if (_cf != 0)
 			{
 				m.init(_cf, _index);
+				pm.add(m);
+			}
+		}
+
+		bringing_similar();
+	}
+
+	void init(size_t count_monoms, vector<size_t> _index, vector<T> _cf)
+	{
+		Monom<T> m;
+		for (int i = 0; i < count_monoms; i++)
+		{
+			if (_cf[i] != 0)
+			{
+				m.init(_cf[i], _index[i]);
 				pm.add(m);
 			}
 		}
@@ -247,5 +264,3 @@ public:
 
 	List<Monom<T>> pm;
 };
-
-

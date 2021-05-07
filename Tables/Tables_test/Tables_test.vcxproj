@@ -36,13 +36,18 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="test_AVL_tree.cpp" />
+    <ClCompile Include="test_Hash_table.cpp" />
+    <ClCompile Include="test_list.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="test_monom.cpp" />
+    <ClCompile Include="test_polinom.cpp" />
+    <ClCompile Include="test_unnordered_massive.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tables\Tables.vcxproj">

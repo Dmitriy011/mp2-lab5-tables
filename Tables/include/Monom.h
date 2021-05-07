@@ -8,15 +8,15 @@ using namespace std;
 
 #define ERR_DEG 111111
 
-template <class T>
+template <class ValType>
 class Monom
 {
 public:
 
-	T cf;
+	ValType cf;
 	size_t index;
 
-	Monom(T _cf = 1, size_t _index = 0) 
+	Monom(ValType _cf = 1, size_t _index = 0) 
 	{
 		if ((_index > 999) || (_index < 0))
 		{
@@ -29,7 +29,7 @@ public:
 		}
 	};
 
-	void init(T _cf, size_t _index)
+	void init(ValType _cf, size_t _index)
 	{
 		if ((_index > 999) || (_index < 0))
 		{
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	T GetCf() const
+	ValType GetCf() const
 	{ 
 		return cf; 
 	}
