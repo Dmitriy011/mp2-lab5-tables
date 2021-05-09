@@ -1,6 +1,0 @@
-﻿  Main.cpp
-D:\VOLOKITIN\mp2-lab5-tables\Tables\include\Polinom.h(234): warning C4172: возвращение адреса локальной или временной переменной : result
-D:\VOLOKITIN\mp2-lab5-tables\Tables\include\Polinom.h(198): warning C4172: возвращение адреса локальной или временной переменной : result
-D:\VOLOKITIN\mp2-lab5-tables\Tables\include\Hash_table.h(167): warning C4715: Hash_table<Polinom<int> >::find_el: значение возвращается не при всех путях выполнения
-D:\VOLOKITIN\mp2-lab5-tables\Tables\include\Polinom.h(223): warning C4172: возвращение адреса локальной или временной переменной : result
-  Tables.vcxproj -> D:\VOLOKITIN\mp2-lab5-tables\Tables\x64\Debug\Tables.exe
