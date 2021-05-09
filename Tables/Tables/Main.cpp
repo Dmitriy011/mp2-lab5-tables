@@ -104,7 +104,7 @@ int main()
 				cout << u1;
 
 				cout <<"AVL_TREE:" << endl;
-				node_avl<Polinom<int>, size_t>* tmp_avl = new node_avl<Polinom<int>, size_t>(p1, key_avl_tree);
+				Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(p1, key_avl_tree);
 				a1.insert(a1.root, tmp_avl);
 				a1.printTree(a1.root);
 
@@ -140,7 +140,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					node_avl<Polinom<int>, size_t>* tmp_avl = new node_avl<Polinom<int>, size_t>(A, key_avl_tree);
+					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(A, key_avl_tree);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -166,7 +166,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					node_avl<Polinom<int>, size_t>* tmp_avl = new node_avl<Polinom<int>, size_t>(B, key_avl_tree);
+					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(B, key_avl_tree);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -192,7 +192,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					node_avl<Polinom<int>, size_t>* tmp_avl = new node_avl<Polinom<int>, size_t>(C, key_avl_tree);
+					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(C, key_avl_tree);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -218,7 +218,7 @@ int main()
 				cin >> key_avl_tree;
 
 				h1.remove(key_unrdMass_hashTable);
-				a1.delete_node(a1.root, key_avl_tree);
+				a1.remove(a1.root, key_avl_tree);
 				u1.del_el(key_unrdMass_hashTable);
 			
 				cout << endl << endl << "Unnordered massive:" << endl;

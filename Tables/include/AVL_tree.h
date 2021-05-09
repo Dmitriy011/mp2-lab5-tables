@@ -1,281 +1,310 @@
 #pragma once
 
-template <typename ValType, typename KeyType>
-struct node_avl 
-{
-	ValType value;
-	KeyType key;
-	size_t height;
-	node_avl* left;
-	node_avl* right;
+#include <iostream>
 
-	node_avl(ValType _value, KeyType _key) 
-	{ 
-		value = _value;
-		key = _key; 
-		left = nullptr;
-		right = nullptr;
-		height = 0;
-	}
+using namespace std;
+
+template <class ValType, class KeyType>
+struct Node_AvlTree
+{
+    Node_AvlTree<ValType, KeyType>* left;
+    Node_AvlTree<ValType, KeyType>* right;
+    size_t height;
+    KeyType key;
+    ValType value;
+
+    Node_AvlTree(ValType _value, KeyType _key)
+    {
+        value = _value;
+        key = _key;
+        left = nullptr;
+        right = nullptr;
+        height = 1;
+    }
 };
 
 template <class ValType, class KeyType>
 class AVL_tree
 {
 public:
-	int operations;
-	node_avl<ValType, KeyType>* root;
+    size_t operations;
 
-	AVL_tree();
+    AVL_tree();
 
-	node_avl<ValType, KeyType>* insert(node_avl<ValType, KeyType>*& _root, node_avl<ValType, KeyType>*& add_node);
-	ValType find(node_avl<ValType, KeyType>*& _root, KeyType _key);
-	node_avl<ValType, KeyType>* delete_node(node_avl<ValType, KeyType>*& _root, KeyType _key);
-	void printTree(node_avl<ValType, KeyType>*& _root) const;
+    Node_AvlTree<ValType, KeyType>* root;
+
+    Node_AvlTree<ValType, KeyType>* insert(Node_AvlTree<ValType, KeyType>* &_pointer, Node_AvlTree<ValType, KeyType>* &_node);
+    Node_AvlTree<ValType, KeyType>* remove(Node_AvlTree<ValType, KeyType>* &_pointer, KeyType &_key);
+    ValType find(Node_AvlTree<ValType, KeyType>*& _root, KeyType _key);
+    void printTree(Node_AvlTree<ValType, KeyType>* _pointer) const;
 
 private:
-	void fix_height_after_add(node_avl<ValType, KeyType>*& _root);
-	node_avl<ValType, KeyType>* RR(node_avl<ValType, KeyType>*& returned_node);
-	size_t get_height_node(node_avl<ValType, KeyType>*& _root) const;
-	node_avl<ValType, KeyType>* RL(node_avl<ValType, KeyType>*& returned_node);
-	node_avl<ValType, KeyType>* balance(node_avl<ValType, KeyType>*& _root);
-	node_avl<ValType, KeyType>* delete_min(node_avl<ValType, KeyType>* _root);
+    size_t Get_height(Node_AvlTree<ValType, KeyType>* _pointer) const;
+    size_t bfactor(Node_AvlTree<ValType, KeyType>* _pointer) const;
+    void fix_height(Node_AvlTree<ValType, KeyType>* _pointer);
+    Node_AvlTree<ValType, KeyType>* RL(Node_AvlTree<ValType, KeyType>* _pointer);
+    Node_AvlTree<ValType, KeyType>* RR(Node_AvlTree<ValType, KeyType>* _pointer);
+    Node_AvlTree<ValType, KeyType>* balance(Node_AvlTree<ValType, KeyType>* _pointer);
+    KeyType Get_min(Node_AvlTree<ValType, KeyType>* _pointer) const;
 };
 
-template<class ValType, class KeyType>
-inline AVL_tree<ValType, KeyType>::AVL_tree()
+template <class ValType, class KeyType>
+AVL_tree<ValType, KeyType>::AVL_tree()
 {
-	root = nullptr;
-	operations = 0;
+    root = nullptr;
+}
+
+template <class ValType, class KeyType>
+Node_AvlTree<ValType, KeyType>* AVL_tree<ValType, KeyType>::insert(Node_AvlTree<ValType, KeyType>* &_pointer, Node_AvlTree<ValType, KeyType>* &_node)
+{
+    operations++;
+    if (root == nullptr)
+    {
+        operations++;
+        cout << operations << endl;
+        operations = 0;
+        root = _node;
+    }
+    else
+    {
+        if (_pointer == nullptr)
+        {
+            Node_AvlTree<ValType, KeyType>* tmp = _node;
+            return tmp;
+        }
+        else
+        {
+            if (_node->key < _pointer->key)
+            {
+                _pointer->left = insert(_pointer->left, _node);
+            }
+            else
+            {
+                _pointer->right = insert(_pointer->right, _node);
+            }
+        }
+    }
+    return balance(_pointer);
+}
+
+template <class ValType, class KeyType>
+Node_AvlTree<ValType, KeyType>* AVL_tree<ValType, KeyType>::remove(Node_AvlTree<ValType, KeyType>* &_pointer, KeyType &_key)
+{
+    if (_pointer == nullptr)
+    {
+        return _pointer;
+    }
+
+    if (_key < _pointer->key)
+    {
+        _pointer->left = remove(_pointer->left, _key);
+    }
+    else
+    {
+        if (_key > _pointer->key)
+        {
+            _pointer->right = remove(_pointer->right, _key);
+        }
+        else
+        {
+            if (_pointer->left != nullptr && _pointer->right != nullptr)
+            {
+                _pointer->key = Get_min(_pointer->right);
+                _pointer->right = remove(_pointer->right, _pointer->key);
+            }
+            else
+            {
+                if (_pointer->left != nullptr)
+                {
+                    if (_pointer == root)
+                    {
+                        root = _pointer->left;
+                    }
+
+                    _pointer = _pointer->left;
+                }
+                else
+                {
+                    if (_pointer->right != nullptr && _pointer == root)
+                    {
+                        root = _pointer->right;
+                    }
+                    else
+                        if (_pointer->right == nullptr && _pointer == root)
+                        {
+                            root = nullptr;
+                        }
+
+                    _pointer = _pointer->right;
+                }
+            }
+        }
+    }
+    return balance(_pointer);
 }
 
 template<class ValType, class KeyType>
-inline ValType AVL_tree<ValType, KeyType>::find(node_avl<ValType, KeyType>* &_root, KeyType _key)
+inline ValType AVL_tree<ValType, KeyType>::find(Node_AvlTree<ValType, KeyType>*& _root, KeyType _key)
 {
-	operations++;
-	if (_root->key == _key)
-	{
-		cout << "Operations: " << operations << endl;
-		operations = 0;
-		return _root->value;
-	}
+    if (_root->key == _key)
+    {
+        return _root->value;
+    }
 
-	if (_key < _root->key)
-	{
-		return find(_root->left, _key);	
-	}
-	else
-	{
-		return find(_root->right, _key);
-	}
+    if (_key < _root->key)
+    {
+        return find(_root->left, _key);
+    }
+    else
+    {
+        return find(_root->right, _key);
+    }
 }
 
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::insert(node_avl<ValType, KeyType>*& _root, node_avl<ValType, KeyType>*& add_node)
+template <class ValType, class KeyType>
+inline void AVL_tree<ValType, KeyType>::printTree(Node_AvlTree<ValType, KeyType>* _pointer) const
 {
-	operations++;
-	if (_root == nullptr)
-	{
-		_root = add_node;
-		cout << "Operations: " << operations << endl;
-		operations = 0;
-		return _root;
-	}
+    if (_pointer != nullptr)
+    {
+        cout << _pointer->key << "  " << _pointer->value <<  endl;
+        printTree(_pointer->left);
 
-	if (add_node->key < _root->key)
-	{
-		_root->left = insert(_root->left, add_node);
-	}
-	else
-	{
-		_root->right = insert(_root->right, add_node);
-	}
+        cout << "//";
 
-	return balance(_root);
+        printTree(_pointer->right);
+    }
 }
 
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::delete_node(node_avl<ValType, KeyType>*& _root, KeyType _key)
+template <class ValType, class KeyType>
+size_t AVL_tree<ValType, KeyType>::bfactor(Node_AvlTree<ValType, KeyType>* _pointer) const
 {
-	if (!_root)
-	{
-		throw "Tree is empty";
-	}
-
-	if (_key < _root->key)
-	{
-		operations++;
-		cout << "Operations: " << operations << endl;
-		operations = 0;
-		_root->left = delete_node(_root->left, _key);
-	}
-	else
-	{
-		if (_key > _root->key)
-		{
-			operations++;
-			cout << "Operations: " << operations << endl;
-			operations = 0;
-			_root->right = delete_node(_root->right, _key);
-		}
-		else
-		{
-			operations++;
-			node_avl<ValType, KeyType>* tmp1_node_l = _root->left;
-			node_avl<ValType, KeyType>* tmp2_node_r = _root->right;
-
-			_root = nullptr;
-			delete _root;
-
-
-			if (!tmp2_node_r)
-			{
-				return tmp1_node_l;
-			}
-
-			node_avl<ValType, KeyType>* min = Get_min(tmp2_node_r);
-
-			min->right = delete_min(tmp2_node_r);
-			min->left = tmp1_node_l;
-
-			operations++;
-			cout << "Operations: " << operations << endl;
-			operations = 0;
-
-			return balance(min);
-		}
-	}
-
-	return balance(_root);
+    if (_pointer)
+    {
+        return Get_height(_pointer->right) - Get_height(_pointer->left);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
-template<class ValType, class KeyType>
-inline void AVL_tree<ValType, KeyType>::printTree(node_avl<ValType, KeyType>*& _root) const
+template <class ValType, class KeyType>
+size_t AVL_tree<ValType, KeyType>::Get_height(Node_AvlTree<ValType, KeyType>* _pointer) const
 {
-	if (_root != nullptr)
-	{
-		cout << _root->key << "  " << _root->value << "  " << endl;
-		printTree(_root->left);
-
-		cout << "//";
-
-		printTree(_root->right);
-	}
+    if (_pointer == nullptr)
+    {
+        return 0;
+    }
+    else
+    {
+        return _pointer->height;
+    }
 }
 
-template<class ValType, class KeyType>
-inline void AVL_tree<ValType, KeyType>::fix_height_after_add(node_avl<ValType, KeyType>*& _root)
+template <class ValType, class KeyType>
+void AVL_tree<ValType, KeyType>::fix_height(Node_AvlTree<ValType, KeyType>* _pointer)
 {
-	size_t height_left = get_height_node(_root->left);
-	size_t height_right = get_height_node(_root->right);
+    if (_pointer != nullptr)
+    {
+        size_t hl = 0;
+        size_t hr = 0;
+        size_t max = 0;
 
-	operations++;
+        if (_pointer->left != nullptr)
+        {
+            hl = Get_height(_pointer->left);
+        }
+        if (_pointer->right != nullptr)
+        {
+            hr = Get_height(_pointer->right);
+        }
 
-	if (height_left > height_right)
-	{
-		_root->height = height_left + 1;
-	}
-	else
-	{
-		_root->height = height_right + 1;
-	}
+        if (hl > hr)
+        {
+            max = hl;
+        }
+        else
+        {
+            max = hr;
+        }
+
+        _pointer->height = max + 1;
+    }
+    else
+    {
+        return;
+    }
 }
 
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::RR(node_avl<ValType, KeyType>*& returned_node)
+template <class ValType, class KeyType>
+Node_AvlTree<ValType, KeyType>* AVL_tree<ValType, KeyType>::RL(Node_AvlTree<ValType, KeyType>* _pointer)
 {
-	operations++;
-	node_avl<ValType, KeyType>* tmp_node = returned_node->left;
-	returned_node->left = tmp_node->right;
-	tmp_node->right = returned_node;
+    Node_AvlTree<ValType, KeyType>* tmp_pRIGHT = _pointer->right;
 
-	fix_height_after_add(returned_node);
-	fix_height_after_add(tmp_node);
+    if (_pointer == root)
+    {
+        root = tmp_pRIGHT;
+    }
 
-	return tmp_node;
+    _pointer->right = tmp_pRIGHT->left;
+    tmp_pRIGHT->left = _pointer;
+    fix_height(_pointer);
+    fix_height(tmp_pRIGHT);
+    fix_height(root);
+    return tmp_pRIGHT;
 }
 
-template<class ValType, class KeyType>
-inline size_t AVL_tree<ValType, KeyType>::get_height_node(node_avl<ValType, KeyType>*& _root) const
+template <class ValType, class KeyType>
+Node_AvlTree<ValType, KeyType>* AVL_tree<ValType, KeyType>::RR(Node_AvlTree<ValType, KeyType>* _pointer)
 {
-	if (_root != nullptr)
-	{
-		return _root->height;
-	}
-	else
-	{
-		return 0;
-	}
+    Node_AvlTree<ValType, KeyType>* tmp_pLEFT = _pointer->left;
+
+    if (_pointer == root)
+    {
+        root = tmp_pLEFT;
+    }
+
+    _pointer->left = tmp_pLEFT->right;
+    tmp_pLEFT->right = _pointer;
+    fix_height(_pointer);
+    fix_height(tmp_pLEFT);
+    fix_height(root);
+    return tmp_pLEFT;
 }
 
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::RL(node_avl<ValType, KeyType>*& returned_node)
+template <class ValType, class KeyType>
+Node_AvlTree<ValType, KeyType>* AVL_tree<ValType, KeyType>::balance(Node_AvlTree<ValType, KeyType>* _pointer)
 {
-	operations++;
-	node_avl<ValType, KeyType>* tmp_node = returned_node->right;
+    fix_height(_pointer);
 
-	returned_node->right = tmp_node->left;
-	tmp_node->left = returned_node;
+    if (bfactor(_pointer) == 2)
+    {
+        if (bfactor(_pointer->right) < 0)
+        {
+            _pointer->right = RR(_pointer->right);
+        }
+        return RL(_pointer);
+    }
 
-	fix_height_after_add(returned_node);
-	fix_height_after_add(tmp_node);
+    if (bfactor(_pointer) == -2)
+    {
+        if (bfactor(_pointer->left) > 0)
+        {
+            _pointer->left = RL(_pointer->left);
+        }
+        return RR(_pointer);
+    }
 
-	return tmp_node;
+    return _pointer;
 }
 
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::balance(node_avl<ValType, KeyType>*& _root)
+template <class ValType, class KeyType>
+KeyType AVL_tree<ValType, KeyType>::Get_min(Node_AvlTree<ValType, KeyType>* _pointer) const
 {
-	operations++;
+    if (_pointer->left == nullptr)
+    {
+        return _pointer->key;
+    }
 
-	fix_height_after_add(_root);
-
-	if ((get_height_node(_root->right) - get_height_node(_root->left)) == 2)
-	{
-		if (get_height_node(_root->right->right) - get_height_node(_root->right->left) < 0)
-		{
-			_root->right = RR(_root->right);
-		}
-
-		return RL(_root);
-	}
-	if ((get_height_node(_root->right) - get_height_node(_root->left)) == -2)
-	{
-		int result_height = get_height_node(_root->left->right) - get_height_node(_root->left->left);
-		if (result_height > 0)
-		{
-			_root->left = RL(_root->left);
-		}
-
-		return RR(_root);
-	}
-
-	return _root;
-}
-
-template<class ValType, class KeyType>
-inline node_avl<ValType, KeyType>* AVL_tree<ValType, KeyType>::delete_min(node_avl<ValType, KeyType>* _root)
-{
-	operations++;
-	if (_root->left == 0)
-	{
-		return _root->right;
-	}
-
-	_root->left = delete_min(_root->left);
-
-	return balance(_root);
-}
-
-template<class ValType, class KeyType>
-node_avl<ValType, KeyType>* Get_min(node_avl<ValType, KeyType>* _root)
-{
-	if (_root->left != nullptr)
-	{
-		Get_min(_root->left);
-	}
-	else
-	{
-		return _root;
-	}
+    return Get_min(_pointer->left);
 }
