@@ -14,7 +14,6 @@ int main()
 	int decision_1 = 0;
 	int decision_2 = 0;
 	int existing_numberPolinom;
-	size_t key_avl_tree = 0;
 	string key_unrdMass_hashTable = "";
 
 	Polinom<int> A;
@@ -27,15 +26,15 @@ int main()
 	B.Input();
 	cout << endl << "Now y have 2 polinoms: A and B." << endl;
 
-	cout << "Unordered_massive, Hash_table has string key. AVL_tree has size_t";
-	cout << endl  <<  "size hash-table: 999" << endl << "Creating.." << endl << endl;
+	cout << "Unordered_massive, Hash_table and AVL_tree have string key.";
+	cout << endl << "size hash-table: 999" << endl << "Creating.." << endl << endl;
 	Unordered_massive<Polinom<int>, string> u1;
-	AVL_tree<Polinom<int>, size_t> a1;
+	AVL_tree<Polinom<int>, string> a1;
 	Hash_table<Polinom<int>> h1;
 
 	while (isCountinue)
 	{
-		cout << "Choice, what u want to do:" << endl << "1.Add A+B" << endl << "2.Sub A-B" << endl << "3.Sub B-A" << endl << "4.Multi A*B" << endl << "5.Working with tables" << endl  << "6.Exit pogramm" <<  endl << "Choice:";
+		cout << "Choice, what u want to do:" << endl << "1.Add A+B" << endl << "2.Sub A-B" << endl << "3.Sub B-A" << endl << "4.Multi A*B" << endl << "5.Working with tables" << endl << "6.Exit pogramm" << endl << "Choice:";
 		cin >> decision_1;
 		cout << endl;
 		switch (decision_1)
@@ -91,10 +90,8 @@ int main()
 				cout << "Create polinom: ";
 				p1.Input();
 				cout << "polinom: " << p1 << endl;
-				cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree" << endl << "Choice for unnorder massive, Hash table: ";
+				cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree: ";
 				cin >> key_unrdMass_hashTable;
-				cout << "Choice for AVL_Tree: ";
-				cin >> key_avl_tree;
 				cout << "Adding...";
 
 				cout << endl << endl << "Unnordered massive:" << endl;
@@ -103,8 +100,8 @@ int main()
 				cout << "Operations:" << u1.operations << endl;
 				cout << u1;
 
-				cout <<"AVL_TREE:" << endl;
-				Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(p1, key_avl_tree);
+				cout << "AVL_TREE:" << endl;
+				Node_AvlTree<Polinom<int>, string>* tmp_avl = new Node_AvlTree<Polinom<int>, string>(p1, key_unrdMass_hashTable);
 				a1.insert(a1.root, tmp_avl);
 				a1.printTree(a1.root);
 
@@ -116,21 +113,19 @@ int main()
 				isCountinue = true;
 
 				break;
-				
+
 			}
 			case 2:
 			{
 				cout << "Choice existing polinom to add:" << endl << "1. A" << endl << "2. B" << endl << "3. C" << endl << "Choice: ";
 				cin >> existing_numberPolinom;
-				
+
 				switch (existing_numberPolinom)
 				{
 				case 1:
 				{
-					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree" << endl << "Choice for unnorder massive, Hash table: ";
+					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree: ";
 					cin >> key_unrdMass_hashTable;
-					cout << "Choice for AVL_Tree: ";
-					cin >> key_avl_tree;
 					cout << "Adding...";
 
 					cout << endl << endl << "Unnordered massive:" << endl;
@@ -140,7 +135,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(A, key_avl_tree);
+					Node_AvlTree<Polinom<int>, string>* tmp_avl = new Node_AvlTree<Polinom<int>, string>(A, key_unrdMass_hashTable);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -153,10 +148,8 @@ int main()
 				}
 				case 2:
 				{
-					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree" << endl << "Choice for unnorder massive, Hash table: ";
+					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree: ";
 					cin >> key_unrdMass_hashTable;
-					cout << "Choice for AVL_Tree: ";
-					cin >> key_avl_tree;
 					cout << "Adding...";
 
 					cout << endl << endl << "Unnordered massive:" << endl;
@@ -166,7 +159,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(B, key_avl_tree);
+					Node_AvlTree<Polinom<int>, string>* tmp_avl = new Node_AvlTree<Polinom<int>, string>(B, key_unrdMass_hashTable);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -179,10 +172,8 @@ int main()
 				}
 				case 3:
 				{
-					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree" << endl << "Choice for unnorder massive, Hash table: ";
+					cout << "Enter name key for unnorder massive, Hash table and for AVL_Tree: ";
 					cin >> key_unrdMass_hashTable;
-					cout << "Choice for AVL_Tree: ";
-					cin >> key_avl_tree;
 					cout << "Adding...";
 
 					cout << endl << endl << "Unnordered massive:" << endl;
@@ -192,7 +183,7 @@ int main()
 					cout << u1;
 
 					cout << "AVL_TREE:" << endl;
-					Node_AvlTree<Polinom<int>, size_t>* tmp_avl = new Node_AvlTree<Polinom<int>, size_t>(C, key_avl_tree);
+					Node_AvlTree<Polinom<int>, string>* tmp_avl = new Node_AvlTree<Polinom<int>, string>(C, key_unrdMass_hashTable);
 					a1.insert(a1.root, tmp_avl);
 					a1.printTree(a1.root);
 
@@ -204,7 +195,7 @@ int main()
 					break;
 				}
 				}
-				
+
 
 				isCountinue = true;
 
@@ -212,15 +203,13 @@ int main()
 			}
 			case 3:
 			{
-				cout << "Enter key for Unordered_massive, Hash_table to remove polinom:";
+				cout << "Enter key to remove polinom:";
 				cin >> key_unrdMass_hashTable;
-				cout << "Enter key for AVL_tree to remove polinom:";
-				cin >> key_avl_tree;
 
 				h1.remove(key_unrdMass_hashTable);
-				a1.remove(a1.root, key_avl_tree);
+				a1.remove(a1.root, key_unrdMass_hashTable);
 				u1.del_el(key_unrdMass_hashTable);
-			
+
 				cout << endl << endl << "Unnordered massive:" << endl;
 				cout << "Operations:" << u1.operations << endl;
 				cout << u1;
@@ -236,17 +225,15 @@ int main()
 			}
 			case 4:
 			{
-				cout << "Enter key for Unordered_massive, Hash_table to find polinom:";
+				cout << "Enter key to find polinom:";
 				cin >> key_unrdMass_hashTable;
-				cout << "Enter key for AVL_tree to find  polinom:";
-				cin >> key_avl_tree;
 
 				cout << endl << "Unnordered massive:";
 				cout << u1.find_value(key_unrdMass_hashTable);
 				cout << endl << "Operations:" << u1.operations;
 
 				cout << endl << "AVL_TREE:";
-				cout << a1.find(a1.root, key_avl_tree);
+				cout << a1.find(a1.root, key_unrdMass_hashTable);
 
 				cout << endl << "Hash_table:";
 				cout << h1.find_el(key_unrdMass_hashTable);
@@ -285,7 +272,7 @@ int main()
 		cin >> isCountinue;
 		}
 		*/
-		
+
 	}
 
 
